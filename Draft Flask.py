@@ -15,6 +15,13 @@ df_kbbi
 ABS = pd.read_csv('abusive.csv')
 ABS
 
+
+def remove_emoji(text):
+    dem = demoji.findall(text)
+    for demoj in dem.keys():
+        text = text.replace(demoj, ' ')
+    return text
+
 def lowercase(text):
     return text.lower()
 
@@ -35,12 +42,6 @@ def removechars(text):
     text = re.sub('x8b',' ',text)
     return text
 
-def remove_emoji(text):
-    dem = demoji.findall(text)
-    for demoj in dem.keys():
-        text = text.replace(demoj, ' ')
-    return text
-
 def sensor(text):
     abusiveword = ABS['ABUSIVE'].tolist()
     for word in abusiveword:
@@ -57,6 +58,7 @@ def changealay(text):
 
 
 def cleaning(text):
+    text = remove_emoji(text)
     text = removechars(text)
     text = lowercase(text)
     text = changealay(text)
